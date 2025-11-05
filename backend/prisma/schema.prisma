@@ -1,0 +1,111 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+
+
+// =======================================================================
+// ENUM STATUS
+// =======================================================================
+
+
+enum PrismaLeadStatus {
+  NEW
+  CONTACTED
+  RECONTACT
+  APPOINTMENT
+  QUOTESENT
+}
+
+enum PrismaQuoteStatus {
+  DRAFT
+  SENT
+  SIGNED
+  REFUSED
+  EXPIRED
+}
+
+enum PrismaInstallationStatus {
+  PREPARATION
+  INPROGRESS
+  COMPLETED
+}
+
+// =======================================================================
+// TABLES
+// =======================================================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  leads     Lead[] 
+}
+
+model Lead {
+  id              String      @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String      @unique 
+  phone           String?
+  company         String?
+  status          PrismaLeadStatus  @default(NEW)
+  assignedToUserId String 
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+
+  assignedToUser  User        @relation(fields: [assignedToUserId], references: [id])
+  
+  quotes          Quote[]
+}
+
+model Quote {
+  id              String          @id @default(uuid())
+  lead            Lead            @relation(fields: [leadId], references: [id])
+  leadId          String 
+  totalAmount     Decimal         @default(0) @db.Decimal(10, 2)
+  status          PrismaQuoteStatus     @default(DRAFT)
+  sentAt          DateTime?
+  signedAt        DateTime?
+  expiresAt       DateTime?
+  signedProof     Json? 
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  items           QuoteItem[] 
+  installation    Installation? 
+}
+
+model QuoteItem {
+  id          String  @id @default(uuid())
+  quote       Quote   @relation(fields: [quoteId], references: [id])
+  quoteId     String 
+  description String
+  quantity    Int
+  unitPrice   Decimal @db.Decimal(10, 2)
+  total       Decimal @db.Decimal(10, 2) 
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Installation {
+  id          String          @id @default(uuid())
+  quoteId     String          @unique 
+  status      PrismaInstallationStatus @default(PREPARATION)
+  startDate   DateTime
+  endDate     DateTime
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+
+  quote       Quote           @relation(fields: [quoteId], references: [id])
+}

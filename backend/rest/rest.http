@@ -1,0 +1,109 @@
+### Create a SIGNED quote to test Installation
+# 1. Create a Lead
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+{ 
+    "firstName": "Install", 
+    "lastName": "Lead", 
+    "email": "install.lead@example.com", 
+    "assignedToUserId": "83987a54-16e1-4048-99c0-1c6c0fdb7b45" 
+}
+
+
+
+@installLeadId = "dc2c6ce4-acdb-46b0-8046-3f77d23fdb17"
+
+### 2. Create a Quote
+POST http://localhost:3000/api/quotes
+Content-Type: application/json
+
+{ 
+    "leadId": "dc2c6ce4-acdb-46b0-8046-3f77d23fdb17", 
+    "items": [
+        {
+            "description":"Service",
+            "quantity":1,
+            "unitPrice":1000
+        }
+    ] 
+}
+
+
+
+### @installQuoteId = {{create-install-quote.response.body.id}}
+
+# 3. Send the Quote
+POST http://localhost:3000/api/quotes/dd037cde-f7e1-4a91-96e9-a7ea6657ed2f/send
+Content-Type: application/json
+
+{ 
+    "expiresAt": "2025-12-31T23:59:59Z"
+}
+
+
+#### 4. Sign the Quote
+POST http://localhost:3000/api/quotes/0da7540a-0a7c-4dba-8cac-32374dbe576d/sign
+
+
+
+### Create an Installation from the signed quote
+POST http://localhost:3000/api/installations
+Content-Type: application/json
+
+{
+    "quoteId": "e15ead10-0eac-4db7-8aa6-79901dd06693",
+    "endDate": "2025-11-16T17:31:48.131Z"
+}
+
+
+
+### update status an Installation from the signed quote
+PUT http://localhost:3000/api/installations/e15ead10-0eac-4db7-8aa6-79901dd06693
+Content-Type: application/json
+
+{
+    "status": "INPROGRESS",
+    "endDate": "2025-11-16T17:31:48.131Z"
+}
+
+
+
+### Get all installations
+GET http://localhost:3000/api/installations
+
+
+
+
+### Get all installations
+GET http://localhost:3000/health
+
+
+
+
+
+####
+POST http://localhost:3000/api/quotes/c8a235dc-6fdc-4a6f-92a9-2738597b1224/send
+Content-Type: application/json
+
+{ 
+    "expiresAt": "2025-12-31T23:59:59Z" 
+}
+
+
+### Now, call the webhook
+POST http://localhost:3000/api/webhooks/universign
+Content-Type: application/json
+
+{
+    "quoteId": "bd3988e9-321c-4ee0-8232-e5ce18f51f12",
+    "status": "expired",
+    "eventData": { 
+        "reason": "Client declined"
+    }
+}
+
+
+### Get Reporting Dashboard Stats
+GET http://localhost:3000/api/reporting/dashboard-stats
+Accept: application/json
+

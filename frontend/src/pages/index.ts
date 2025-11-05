@@ -1,0 +1,6 @@
+export { default as LoginPage } from './Login'
+export { default as Layout } from './Layout'
+export { default as DashboardPage } from './Dashboard'
+export { default as LeadsPage } from './Leads'
+export { default as QuotePage } from './Quote'
+export { default as InstallationPage } from './Installations'

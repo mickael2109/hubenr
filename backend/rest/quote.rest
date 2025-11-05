@@ -1,0 +1,86 @@
+
+
+### @newLeadId = {{create-lead.response.body.id}}
+
+### Create a new Quote (replace {LEAD_ID} with the ID of the lead you just created)
+POST http://localhost:3000/api/quotes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNDJlZDM4ZS1lNzY1LTQ4NDQtODBmNS1jZWQ2N2M2ZWQyYTMiLCJlbWFpbCI6Im1pay5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjIxNDMzODcsImV4cCI6MTc2MjIyOTc4N30.hsa0LasYQrLCB2j9o3qcoD8HFNuo3_oKiTMafA8542g
+
+{
+    "leadId": "aeceaf8e-7450-4bd7-98ca-c77ed7038571",
+    "items": [
+        {
+            "description": "",
+            "quantity": 0,
+            "unitPrice": 0
+        }
+    ]
+}
+
+###  @newQuoteId = ""
+###@newItemId = {{create-quote.response.body.items[0].id}}
+
+
+
+### Get all Quote 
+GET http://localhost:3000/api/quotes
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNDJlZDM4ZS1lNzY1LTQ4NDQtODBmNS1jZWQ2N2M2ZWQyYTMiLCJlbWFpbCI6Im1pay5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjIyNjExNDYsImV4cCI6MTc2MjM0NzU0Nn0.XnzPtj2qqqse0CePyHE4aVUoMp653ScVPLgncyxaoZM
+
+
+
+### Get a Quote by ID
+GET http://localhost:3000/api/quotes/f09cfa25-a150-41f8-9ed9-0544ae3ed54f
+Accept: application/json
+
+
+### Get all Quotes for a specific Lead
+GET http://localhost:3000/api/quotes?leadId=7b0d5601-178b-4d75-97fe-0ce6d1251adf
+Accept: application/json
+
+
+
+### Add an item to the Quote (status must be DRAFT)
+POST http://localhost:3000/api/quotes/8ac32cde-33e6-490c-bfa4-f7886af36de7/items
+Content-Type: application/json
+
+{
+    "description": "Installation B",
+    "quantity": 5,
+    "unitPrice": 10
+}
+
+### Update an item in the Quote (replace {ITEM_ID} with an actual item ID from the response)
+PUT http://localhost:3000/api/quotes/8ac32cde-33e6-490c-bfa4-f7886af36de7/items/4d1cd2f1-d3dc-4249-9c4b-ba5345404eb0
+Content-Type: application/json
+
+{
+    "quantity": 3,
+    "unitPrice": 50
+}
+
+### Remove an item from the Quote
+DELETE http://localhost:3000/api/quotes/8ac32cde-33e6-490c-bfa4-f7886af36de7/items/4d1cd2f1-d3dc-4249-9c4b-ba5345404eb0
+
+
+### Mark Quote as SENT (expires in 30 days)
+POST http://localhost:3000/api/quotes/8ac32cde-33e6-490c-bfa4-f7886af36de7/send
+Content-Type: application/json
+
+{
+    "expiresAt": "2025-12-04T23:59:59.000Z"
+}
+
+### Simulate Quote SIGNATURE
+POST http://localhost:3000/api/quotes/b87c879e-549f-4545-b545-f131f43e7f12/sign
+Content-Type: application/json
+
+
+### Simulate Quote REFUSAL
+# Note: You can't refuse a signed quote. Create a new one and send it to test this.
+# POST http://localhost:3000/api/quotes/{another-quote-id}/refuse
+
+
+### Delete a Quote
+DELETE http://localhost:3000/api/quotes/f09cfa25-a150-41f8-9ed9-0544ae3ed54f

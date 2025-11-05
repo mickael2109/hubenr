@@ -1,0 +1,89 @@
+## Create a new Lead 
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{
+    "firstName": "Robert",
+    "lastName": "Prospect",
+    "email": "robert@example.com",
+    "phone": "0382932323",
+    "company": "ABC Corp",
+    "assignedToUserId": "b42ed38e-e765-4844-80f5-ced67c6ed2a3"
+}
+
+
+
+### Get all Leads
+GET http://localhost:3000/api/leads
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNDJlZDM4ZS1lNzY1LTQ4NDQtODBmNS1jZWQ2N2M2ZWQyYTMiLCJlbWFpbCI6Im1pay5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjIwMjE2MTEsImV4cCI6MTc2MjEwODAxMX0.QzyfqSJBisgz79iheJq2sUg6g_FooMk_rZBZNsyKiI4
+
+
+
+
+### Get all Leads with status NEW
+GET http://localhost:3000/api/leads?status=CONTACTED
+Accept: application/json
+
+
+
+
+### Get a Lead by ID (replace {LEAD_ID} with an actual ID from a create/get-all response)
+GET http://localhost:3000/api/leads/7b0d5601-178b-4d75-97fe-0ce6d1251adf
+Accept: application/json
+
+
+
+
+### Update a Lead by ID (replace {LEAD_ID} with an actual ID)
+PUT http://localhost:3000/api/leads/75bdc57f-90bf-4557-8bb2-e938f0d226b4
+Content-Type: application/json
+
+{
+    "status": "CONTACTED",
+    "company": "XYZ Inc.",
+    "phone": "0987654321"
+}
+
+
+
+### Attempt to update email to an existing email of *another* lead (should return 409 Conflict)
+# 1. Create Lead A (get its ID)
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{ 
+    "firstName": "LeadA", 
+    "lastName": "L.", 
+    "phone": "0381099379",
+    "email": "leadA@example.com", 
+    "assignedToUserId": "83987a54-16e1-4048-99c0-1c6c0fdb7b45"
+}
+
+
+
+### 2. Create Lead B (get its ID)
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{ 
+    "firstName": "LeadB", 
+    "lastName": "L.", 
+    "email": "leadB@example.com", 
+    "assignedToUserId": "{SALES_REP_USER_ID}"
+}
+
+### 3. Try to update Lead A's email to leadB@example.com (replace {LEAD_A_ID} with Lead A's ID)
+PUT http://localhost:3000/api/leads/{LEAD_A_ID}
+Content-Type: application/json
+
+{ 
+    "email": "leadB@example.com" 
+}
+
+
+
+
+
+### Delete a Lead by ID (replace {LEAD_ID} with an actual ID)
+DELETE http://localhost:3000/api/leads/91c58724-33f5-4d2b-aa32-89cbece7a938

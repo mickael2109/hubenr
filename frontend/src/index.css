@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: cupcake;
+}
+
+
+
+@theme {
+  --font-scripte: Great Vibes, cursive;
+  --color-primary_mc: #C00202;  
+  --color-sidebar_mc: #fbf8f7;
+  --color-second_mc: #5327c2;
+  --color-third_mc: #383838;
+  --color-white_mc: #fff;
+  --color-line: #a0aec013;
+  --breakpoint-xxs: 320px;
+  --breakpoint-xs: 450px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-h-sm: 600px;
+  --breakpoint-h-md: 820px;
+  --breakpoint-h-lg: 900px;
+  
+}
+
+
+i{
+  cursor: pointer;
+}
+
+body{
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE et Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+
+@keyframes gradient-xy {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-xy {
+  background-size: 200% 200%;
+  animation: gradient-xy 6s ease infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}

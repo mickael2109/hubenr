@@ -1,0 +1,63 @@
+
+### Create a new user
+POST https://hubenr-dataven-io.onrender.com/api/users/register
+Content-Type: application/json
+
+{
+    "email": "mickaelrkt20@gmail.com",
+    "name": "Mickael RAKOTONDRAVONY",
+    "password": "Mickael0@"
+}
+
+
+
+### 3. Log in to get tokens
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "mik.doe@example.com",
+    "password": "Mickael0@"
+}
+
+
+### GET USRE BY TOKEN
+GET http://localhost:3000/api/auth/me
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNDJlZDM4ZS1lNzY1LTQ4NDQtODBmNS1jZWQ2N2M2ZWQyYTMiLCJlbWFpbCI6Im1pay5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjIwMjE2MTEsImV4cCI6MTc2MjEwODAxMX0.QzyfqSJBisgz79iheJq2sUg6g_FooMk_rZBZNsyKiI4
+
+
+
+
+### Get all users
+GET http://localhost:3000/api/users
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNDJlZDM4ZS1lNzY1LTQ4NDQtODBmNS1jZWQ2N2M2ZWQyYTMiLCJlbWFpbCI6Im1pay5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE5ODY3MjUsImV4cCI6MTc2MjA3MzEyNX0.kaazb0svKBymCRSpC_DQmSMPKh6HdaNc0FtTNMq9ggc
+
+
+
+### 5. Use the refresh token to get a new access token
+POST http://localhost:3000/api/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNDJlZDM4ZS1lNzY1LTQ4NDQtODBmNS1jZWQ2N2M2ZWQyYTMiLCJlbWFpbCI6Im1pay5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjE5ODY4MDMsImV4cCI6MTc2MjU5MTYwM30.AONnRMdZFWY8ZFv4bDM8uoZjLawsLfb7674Hb82C5XM"
+}
+
+
+### Get user by ID 
+GET http://localhost:3000/api/users/45a148ae-fd98-492a-ba76-0b25e1d87c9d
+
+
+### Update only the name
+PUT http://localhost:3000/api/users/45a148ae-fd98-492a-ba76-0b25e1d87c9d
+Content-Type: application/json
+
+{
+    "name": "mik D. Changed"
+}
+
+
+
+### delete by ID 
+DELETE http://localhost:3000/api/users/55b96b6e-72f3-47fb-9e79-6db25db55e1b
