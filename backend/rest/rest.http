@@ -58,7 +58,7 @@ Content-Type: application/json
 
 
 ### update status an Installation from the signed quote
-PUT http://localhost:3000/api/installations/e15ead10-0eac-4db7-8aa6-79901dd06693
+PUT http://localhost:3000/api/installations/b404e908-b787-4c20-a71a-c0a7b1f9b675
 Content-Type: application/json
 
 {
